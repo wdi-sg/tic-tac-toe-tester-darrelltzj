@@ -33,40 +33,38 @@ function playTurn(index) {
 
 function checkWinner(arr, player) {
   var output = 0
-  if (!board.includes(0)) {
-    output = 3
-  }
-  else {
   switch (true) {
     case (arr[0] !== 0 && arr[0] === arr[1] && arr[0] === arr[2]):
-    output = player
-    break
+      output = player
+      break
     case (arr[3] !== 0 && arr[3] === arr[4] && arr[3] === arr[5]):
-    output = player
-    break
+      output = player
+      break
     case (arr[6] !== 0 && arr[6] === arr[7] && arr[6] === arr[8]):
-    output = player
-    break
+      output = player
+      break
     case (arr[0] !== 0 && arr[0] === arr[3] && arr[0] === arr[6]):
-    output = player
-    break
+      output = player
+      break
     case (arr[1] !== 0 && arr[1] === arr[4] && arr[1] === arr[7]):
-    output = player
-    break
+      output = player
+      break
     case (arr[2] !== 0 && arr[2] === arr[5] && arr[2] === arr[8]):
-    output = player
-    break
+      output = player
+      break
     case (arr[0] !== 0 && arr[0] === arr[4] && arr[0] === arr[8]):
-    output = player
-    break
+      output = player
+      break
     case (arr[2] !== 0 && arr[2] === arr[4] && arr[2] === arr[6]):
-    output = player
-    break
+      output = player
+      break
+    case (!board.includes(0)):
+      output = 3
+      break
     default:
     output = 0
     break
   }
-}
   return output
 }
 
@@ -94,6 +92,3 @@ function restart() {
   winnerResult = 0
   currentPlayer = 1
 }
-
-//switch cases
-//player alternates
