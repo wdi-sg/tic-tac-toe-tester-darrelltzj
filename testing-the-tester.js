@@ -11,11 +11,8 @@ function playTurn(index) {
     moves.push(index)
     if (currentPlayer === 1) {
       board[index] = 1
-      if (! board.includes(0)) {
-        winnerResult = 3
-      }
-      else if (checkWinner(board)) {
-        winnerResult = 1
+      if (checkWinner(board,1) !== 0) {
+        winnerResult = checkWinner(board, 1)
       }
       else {
         currentPlayer = 2
@@ -23,11 +20,8 @@ function playTurn(index) {
     }
     else if (currentPlayer === 2) {
       board[index] = 2
-      if (! board.includes(0)) {
-        winnerResult = 3
-      }
-      else if(checkWinner(board)) {
-        winnerResult = 2
+      if(checkWinner(board,2) !== 0) {
+        winnerResult = checkWinner(board, 2)
       }
       else {
         currentPlayer = 1
@@ -37,37 +31,42 @@ function playTurn(index) {
   }
 }
 
-function checkWinner(arr) {
-  var output = false
+function checkWinner(arr, player) {
+  var output = 0
+  if (!board.includes(0)) {
+    output = 3
+  }
+  else {
   switch (true) {
     case (arr[0] !== 0 && arr[0] === arr[1] && arr[0] === arr[2]):
-    output = true
+    output = player
     break
     case (arr[3] !== 0 && arr[3] === arr[4] && arr[3] === arr[5]):
-    output = true
+    output = player
     break
     case (arr[6] !== 0 && arr[6] === arr[7] && arr[6] === arr[8]):
-    output = true
+    output = player
     break
     case (arr[0] !== 0 && arr[0] === arr[3] && arr[0] === arr[6]):
-    output = true
+    output = player
     break
     case (arr[1] !== 0 && arr[1] === arr[4] && arr[1] === arr[7]):
-    output = true
+    output = player
     break
     case (arr[2] !== 0 && arr[2] === arr[5] && arr[2] === arr[8]):
-    output = true
+    output = player
     break
     case (arr[0] !== 0 && arr[0] === arr[4] && arr[0] === arr[8]):
-    output = true
+    output = player
     break
     case (arr[2] !== 0 && arr[2] === arr[4] && arr[2] === arr[6]):
-    output = true
+    output = player
     break
     default:
-    output = false
+    output = 0
     break
   }
+}
   return output
 }
 
