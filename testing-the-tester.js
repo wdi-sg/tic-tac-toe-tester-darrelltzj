@@ -90,8 +90,6 @@ function whoWon() {
 }
 
 function restart() {
-  playerOnePositions = [false, false, false, false, false, false, false, false, false]
-  playerTwoPositions = [false, false, false, false, false, false, false, false, false]
   board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
   moves = []
   winnerResult = 0
