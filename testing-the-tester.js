@@ -1,94 +1,111 @@
-var board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-var moves = []
-var currentPlayer = 0
-var winnerResult = 0
+$(document).ready(function () {
+  var board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  var currentPlayer = 0
+  var winnerResult = 0
 
-function playTurn(index) {
-  if (moves.includes(index) || isGameOver()) {
-    return false
+  function playTurn(index) {
+    if (board[index] !== 0 || isGameOver()) {
+      return false
+    }
+    else {
+      if (currentPlayer === 1) {
+        board[index] = 1
+        if (whoWon() === 0) {
+          currentPlayer = 2
+        }
+      }
+      else if (currentPlayer === 2) {
+        board[index] = 2
+        if(whoWon() === 0) {
+          currentPlayer = 1
+        }
+      }
+      return true
+    }
   }
-  else {
-    moves.push(index)
-    if (currentPlayer === 1) {
-      board[index] = 1
-      if (checkWinner(board) !== 0) {
-        winnerResult = checkWinner(board)
+
+  function isGameOver() {
+    if (whoWon() === 0) {
+      return false
+    }
+    else {
+      if (winnerResult === 1) {
+        alert('Winner is X')
+      }
+      else if (winnerResult === 2) {
+        alert('Winner is O')
+      }
+      else if (winnerResult === 3) {
+        alert('Draw')
+      }
+      restart()
+      return true
+    }
+  }
+
+  function whoWon() {
+    switch (true) {
+      case (board[0] !== 0 && board[0] === board[1] && board[0] === board[2]):
+        winnerResult = currentPlayer
+        return winnerResult
+      case (board[3] !== 0 && board[3] === board[4] && board[3] === board[5]):
+        winnerResult = currentPlayer
+        return winnerResult
+      case (board[6] !== 0 && board[6] === board[7] && board[6] === board[8]):
+        winnerResult = currentPlayer
+        return winnerResult
+      case (board[0] !== 0 && board[0] === board[3] && board[0] === board[6]):
+        winnerResult = currentPlayer
+        return winnerResult
+      case (board[1] !== 0 && board[1] === board[4] && board[1] === board[7]):
+        winnerResult = currentPlayer
+        return winnerResult
+      case (board[2] !== 0 && board[2] === board[5] && board[2] === board[8]):
+        winnerResult = currentPlayer
+        return winnerResult
+      case (board[0] !== 0 && board[0] === board[4] && board[0] === board[8]):
+        winnerResult = currentPlayer
+        return winnerResult
+      case (board[2] !== 0 && board[2] === board[4] && board[2] === board[6]):
+        winnerResult = currentPlayer
+        return winnerResult
+      case (!board.includes(0)):
+        winnerResult = 3
+        return winnerResult
+      default:
+      winnerResult = 0
+      return winnerResult
+    }
+  }
+
+  function restart() {
+    board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    winnerResult = 0
+    currentPlayer = 1
+    updateGrid()
+  }
+
+  function updateGrid() {
+    board.forEach(function (player, i) {
+      var eachBox = $('.box:nth-child(' + (i + 1) + ')')
+      if (player === 1) {
+        eachBox.text('X')
+      }
+      else if (player === 2) {
+        eachBox.text('O')
       }
       else {
-        currentPlayer = 2
+        eachBox.text('')
       }
-    }
-    else if (currentPlayer === 2) {
-      board[index] = 2
-      if(checkWinner(board) !== 0) {
-        winnerResult = checkWinner(board)
-      }
-      else {
-        currentPlayer = 1
-      }
-    }
-    return true
+    })
   }
-}
 
-function checkWinner(arr) {
-  var output = 0
-  switch (true) {
-    case (arr[0] !== 0 && arr[0] === arr[1] && arr[0] === arr[2]):
-      output = currentPlayer
-      break
-    case (arr[3] !== 0 && arr[3] === arr[4] && arr[3] === arr[5]):
-      output = currentPlayer
-      break
-    case (arr[6] !== 0 && arr[6] === arr[7] && arr[6] === arr[8]):
-      output = currentPlayer
-      break
-    case (arr[0] !== 0 && arr[0] === arr[3] && arr[0] === arr[6]):
-      output = currentPlayer
-      break
-    case (arr[1] !== 0 && arr[1] === arr[4] && arr[1] === arr[7]):
-      output = currentPlayer
-      break
-    case (arr[2] !== 0 && arr[2] === arr[5] && arr[2] === arr[8]):
-      output = currentPlayer
-      break
-    case (arr[0] !== 0 && arr[0] === arr[4] && arr[0] === arr[8]):
-      output = currentPlayer
-      break
-    case (arr[2] !== 0 && arr[2] === arr[4] && arr[2] === arr[6]):
-      output = currentPlayer
-      break
-    case (!board.includes(0)):
-      output = 3
-      break
-    default:
-    output = 0
-    break
-  }
-  return output
-}
+  $('body').on('click', '#restart', restart)
 
-function isGameOver() {
-  if (moves.length >= 9 || winnerResult !== 0) {
-    return true
-  }
-  else {
-    return false
-  }
-}
-
-function whoWon() {
-  if(isGameOver()) {
-    return winnerResult //draw 3
-  }
-  else {
-    return 0
-  }
-}
-
-function restart() {
-  board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  moves = []
-  winnerResult = 0
-  currentPlayer = 1
-}
+  $('.grid').on('click', '.box', function() {
+    playTurn($('.box').index($(this)))
+    updateGrid()
+    isGameOver()
+  })
+  restart()
+})

@@ -1,0 +1,26 @@
+*{
+  box-sizing: border-box;
+  /*width predictable*/
+}
+
+.container {
+  margin:0 auto;
+  max-width: 800px;
+  width:90%;
+  background-color: beige
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin:0 auto;
+  width:50%;
+}
+
+.box {
+  background-color: beige;
+  width:33.33%;
+  height:100px;
+  border:1px solid navy;
+  padding:10px
+}
