@@ -1,7 +1,7 @@
 $(document).ready(function () {
   var board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
   var currentPlayer = 0
-  var winnerResult = 0
+  var winnerResult = whoWon()
 
   function playTurn(index) {
     if (board[index] !== 0 || isGameOver()) {
@@ -73,8 +73,8 @@ $(document).ready(function () {
         winnerResult = 3
         return winnerResult
       default:
-      winnerResult = 0
-      return winnerResult
+        winnerResult = 0
+        return winnerResult
     }
   }
 
